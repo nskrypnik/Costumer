@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Medieval Noir</title>
+	<link rel="stylesheet" href="${request.static_url('costumer:static/css/style.css')}" type="text/css" charset="utf-8" />
+	<script src="${request.static_url('costumer:static/js/jquery-1.5.2.min.js')}"></script>		
+	<script src="${request.static_url('costumer:static/js/xenforo.js')}"></script>
+</head>
+
+<body>
+	<span id="background"></span>
+	<div id="page">
+		<div id="sidebar">
+			<div id="logo">
+				<a href="index.php">Творческая мастерская <em>Иванны Радовской</em></a>
+			</div> <!-- /#logo -->
+			<ul id="navigation">
+				<li><a href="about.php">О себе</a></li>
+				<li class="selected"><a href="index.php">Вышивка</a></li>
+				<li><a href="images.php">Одежда</a></li>
+				<li><a href="contact-us.php">Contact Us</a></li>
+				<li><a href="blog.php">Blog</a></li>
+			</ul> <!-- /#navigation -->
+			<ul id="connect">
+				<li><a href="http://facebook.com/freewebsitetemplates" target="_blank" class="facebook"></a></li>
+				<li><a href="http://twitter.com/fwtemplates" target="_blank" class="twitter"></a></li>
+				<li><a href="blog.php" class="link-us"></a></li>
+			</ul> <!-- /#connect -->
+			<div class="footer">
+				&copy; Copyright &copy; 2011.<br/>
+				<a href="index.php">Company name</a> all rights reserved.
+			</div> <!-- /.footer -->
+		</div> <!-- /#sidebar -->
+		
+		<div id="contents">		
+			<span class="header"></span>
+			<%block name="content" />
+		</div> <!-- /#contents -->
+	</div> <!-- /#page -->
+	<script> 
+
+ 
+jQuery.extend(true, XenForo,
+{
+	visitor: { user_id: 0 },
+	serverTimeInfo:
+	{
+		now: 1334997647,
+		today: 1334984400,
+		todayDow: 6
+	},
+	_lightBoxUniversal: "0",
+	_enableOverlays: "1",
+	_animationSpeedMultiplier: "1",
+	_overlayConfig:
+	{
+		top: "10%",
+		speed: 200,
+		closeSpeed: 100,
+		mask:
+		{
+			color: "rgb(255, 255, 255)",
+			opacity: "0.6",
+			loadSpeed: 200,
+			closeSpeed: 100
+		}
+	},
+	_ignoredUsers: [],
+	_loadedScripts: [],
+	_cookieConfig: { path: "/", domain: "", prefix: "xf_"},
+	_csrfToken: "",
+	_csrfRefreshUrl: "login/csrf-token-refresh",
+	_jsVersion: "6ec63d96"
+});
+jQuery.extend(XenForo.phrases,
+{
+	cancel: "Cancel",
+ 
+	a_moment_ago:    "A moment ago",
+	one_minute_ago:  "1 minute ago",
+	x_minutes_ago:   "%minutes% minutes ago",
+	today_at_x:      "Today at %time%",
+	yesterday_at_x:  "Yesterday at %time%",
+	day_x_at_time_y: "%day% at %time%",
+ 
+	day0: "Sunday",
+	day1: "Monday",
+	day2: "Tuesday",
+	day3: "Wednesday",
+	day4: "Thursday",
+	day5: "Friday",
+	day6: "Saturday",
+ 
+	_months: "January,February,March,April,May,June,July,August,September,October,November,December",
+	_daysShort: "Sun,Mon,Tue,Wed,Thu,Fri,Sat",
+ 
+	following_error_occurred: "The following error occurred",
+	server_did_not_respond_in_time_try_again: "The server did not respond in time. Please try again.",
+	logging_in: "Logging in",
+	click_image_show_full_size_version: "Click this image to show the full-size version.",
+	show_hidden_content_by_x: "Show hidden content by {names}"
+});
+ 
+// Facebook Javascript SDK
+XenForo.Facebook.appId = "";
+XenForo.Facebook.forceInit = false;
+ 
+</script>
+</body>
+</html>
