@@ -2,7 +2,9 @@
 
 <%block name="content">
 	<ul class="images">
-		<li><img src="images/illustration1.jpg" alt="Img" /></li>
+	    % for photo in gallery.photos:
+		    <li><img src="${photo.resized(130,130)}" alt="Img" /></li>
+		% endfor
 	</ul>
 </%block>
 
