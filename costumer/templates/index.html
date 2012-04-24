@@ -3,7 +3,12 @@
 <%block name="content">
 	<ul class="images">
 	    % for photo in gallery.photos:
-		    <li><img src="${photo.resized(130,130)}" alt="Img" /></li>
+		    <li class="photo" media_id="${photo.id}">
+		        <a href="${photo.original()}">
+		            <img src="${photo.resized(130,130)}" alt="Img" />
+		            <span class="viewer-thumb hidden">${photo.resized(30,30)}</span>
+		        </a>
+		    </li>
 		% endfor
 	</ul>
 </%block>

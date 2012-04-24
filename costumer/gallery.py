@@ -17,11 +17,15 @@ class Photo(object):
         if url[-1] != '/': url = "%s/" % url
         cls.cache_url = url
         
-    def __init__(self, filename, dirname, request):
+    def __init__(self, id_, filename, dirname, request):
+        self.id = id_
         self.request = request
         self.filename = filename
         self.dirname = dirname
         self.fullpath = os.path.join(dirname, filename)
+        
+    def original(self):
+        return self.resized(1600, 1600, True)
         
     def cache_photo(func):
         '''
@@ -78,12 +82,14 @@ class GalleryTree(list):
         
         dir_items = os.listdir(self.base_dir)
         dir_items.sort()
+        photo_index = 0
         for  item in dir_items:
             # First skip all files begin on underscore
             if item[0] == '_':
                 continue
             if is_image(item):
-                self.photos.append(Photo(item, self.base_dir, request))
+                self.photos.append(Photo(photo_index, item, self.base_dir, request))
+                photo_index += 1
             else:
                 dir_path = os.path.join(self.base_dir, item)
                 self.append(GalleryTree(request, dir_path))

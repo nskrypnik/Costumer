@@ -6,8 +6,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Medieval Noir</title>
 	<link rel="stylesheet" href="${request.static_url('costumer:static/css/style.css')}" type="text/css" charset="utf-8" />
-	<script src="${request.static_url('costumer:static/js/jquery-1.5.2.min.js')}"></script>		
+	<link rel="stylesheet" href="${request.static_url('costumer:static/css/photoviewer.css')}" type="text/css" charset="utf-8" />
+	<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>		
 	<script src="${request.static_url('costumer:static/js/xenforo.js')}"></script>
+	<script src="${request.static_url('costumer:static/js/photoviewer.js')}"></script>
 </head>
 
 <body>
@@ -15,14 +17,14 @@
 	<div id="page">
 		<div id="sidebar">
 			<div id="logo">
-				<a href="index.php">Творческая мастерская <em>Иванны Радовской</em></a>
+				<a href="index.html">Творческая мастерская <em>Иванны Радовской</em></a>
 			</div> <!-- /#logo -->
 			<ul id="navigation">
-				<li><a href="about.php">О себе</a></li>
+				<li><a href="about.html">О себе</a></li>
 				<li class="selected"><a href="index.php">Вышивка</a></li>
-				<li><a href="images.php">Одежда</a></li>
-				<li><a href="contact-us.php">Contact Us</a></li>
-				<li><a href="blog.php">Blog</a></li>
+				<li><a href="images.html">Одежда</a></li>
+				<li><a href="contact-us.html">Контакты</a></li>
+				<li><a href="blog.php">Магазин</a></li>
 			</ul> <!-- /#navigation -->
 			<ul id="connect">
 				<li><a href="http://facebook.com/freewebsitetemplates" target="_blank" class="facebook"></a></li>
@@ -107,7 +109,81 @@ jQuery.extend(XenForo.phrases,
 // Facebook Javascript SDK
 XenForo.Facebook.appId = "";
 XenForo.Facebook.forceInit = false;
+
+$(document).ready(function(){
+
+    $('.photo a').live('click', function(ev){
+		ev.preventDefault();
+		photoViewer.show(ev.target);
+		return false;
+	});
+
+});
  
 </script>
+
+<div id="photo-view">
+  <div class="photos-wrapper">
+    <table>
+      <tr>
+        <td class="photo-scroll-left"><a href="#">Scroll Left</a></td>
+        <td class="photo-slides-center">
+          <div class="photo-slides-wrapper">
+            <div class="photo-slides">
+                Loading...
+            </div>
+            <div class="photo-viewer-title-wrapper">
+              <span class="photo-title"></span>
+
+              <a class="photo-edit-link" href="#">Edit</a>
+              <span class="photo-edit-fields hidden">
+                <input type="text" name="title" value="" />
+                <input type="hidden" name="photo_id" value="">
+                <button class="button change-photo-caption">Save</button>
+              </span>
+            </div>
+          </div>
+        </td>
+        <td class="photo-scroll-right"><a href="#">Scroll Right</a></td>
+      </tr>
+    </table>
+  </div>
+  
+  <a href="#" class="close" title="Close">Close</a>
+  <%doc>
+  <div class="comments-wrapper">
+      <div class="photo-comments-wrapper">
+        
+        <div class="media post-info">
+          <a href="#" class="img post-avatar"><img
+             src=""
+             alt="UserName" /></a>
+          <div class="bd">
+            <div class="post-author"></div>
+          </div>
+          <div class="visualClear"></div>
+            <ul class="post-actions">
+              <li class="post-age">6 days ago</li>
+              <li class="post-action-comment"><a href="#">Comment</a></li>
+            </ul>
+          
+        </div>
+        
+        <div class="post-wrapper">
+          <div class="comment-list">
+          </div>
+          <div class="post-comment-link">
+            <a href="#">Comment</a>
+          </div>
+          <div class="post-reply-new hidden">
+            <textarea name="replybody" cols="50" rows="5"></textarea>
+            <button type="submit" class="button">Post</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </%doc>
+</div>
 </body>
 </html>

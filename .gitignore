@@ -1,3 +1,5 @@
 *.swp
 *.pyc
 *~
+costumer/static/gallery/
+costumer/static/cache/

@@ -1,0 +1,202 @@
+body.photo-viewer-active {
+  overflow: hidden; /* prevent scrolling of the background */
+}
+#photo-view {
+  display: none; /* hidden initially */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  background-color: #333; /* fallback */
+  background-color: rgba(0,0,0,1); /* the RGB fallback color only works when using shorthand in IE 6,7 */
+}
+#photo-view .media .bd {
+  width: auto;
+}
+#photo-view .photos-wrapper {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0px;
+  bottom: 0;
+}
+#photo-view .photos-wrapper table {
+  width: 100%;
+  height: 100%;
+}
+#photo-view .close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 9999;
+  width: 20px;
+  height: 0;
+  padding-top: 21px;
+  overflow: hidden;
+  background: url(../images/photo-viewer-close.png) no-repeat center center;
+}
+#photo-view .photos-wrapper1 table {
+  width: 100%;
+}
+#photo-view .photo-slides-center {
+  text-align: center;
+  vertical-align: middle;
+}
+#photo-view .photo-slides-wrapper {
+  display: inline-block;
+}
+#photo-view .photo-scroll-left,
+#photo-view .photo-scroll-right {
+  width: 30px;
+  vertical-align: middle;
+  background-color: #000;
+}
+#photo-view .photo-scroll-left a,
+#photo-view .photo-scroll-right a {
+  display: block;
+  height: 0;
+  padding-top: 200px;
+  overflow: hidden;
+}
+#photo-view .photo-scroll-left a {
+  background: url(../images/photo-scroll-left.png) no-repeat center center;
+}
+#photo-view .photo-scroll-right a {
+  background: url(../images/photo-scroll-right.png) no-repeat center center;
+}
+#photo-view .photo-scroll-left a:hover {
+  position: relative;
+  left: -2px;
+}
+#photo-view .photo-scroll-right a:hover {
+  position: relative;
+  right: -2px;
+}
+#photo-view .photo-slides img {
+/*  vertical-align: middle;*/
+  image-rendering: optimizequality;
+}
+
+#photo-view .comments-wrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 302px;
+}
+
+/*#photo-view .comments {*/
+/*  width: 290px;*/
+/*  vertical-align: top;*/
+/*  background-color: #fff;*/
+/*}*/
+
+#photo-view .comments .comment-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#photo-view .photo-slides .photo {
+  display: none;
+  background: url(../images/spinner.gif) no-repeat center center;
+}
+#photo-view .photo-slides .photo.active {
+  display: block;
+  margin: 0 auto;
+  z-index:9010;
+}
+#photo-view .photo-slides .photo.last-active {
+  display: block;
+  margin: 0 auto;
+  z-index:9008;
+}
+
+#photo-view .photo-comments-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 12px;
+  background-color: white;
+}
+#photo-view .post-wrapper {
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0;
+  padding-top: 20px;
+  padding-right: 13px;
+  position: absolute;
+  right: 0;
+  top: 80px;
+  margin: 5px;
+}
+#photo-view .post-info {
+  margin: 0;
+  height: 70px;
+  padding: 5px;
+  padding-top: 15px;
+  padding-left: 9px;
+}
+#photo-view .post-info .post-avatar {
+  margin: 0 5px 5px 0;
+}
+#photo-view .post-actions {
+  text-align: center;
+  padding-bottom: 20px;
+}
+#photo-view .post-reply {
+  margin: 3px 0;
+  padding: 5px;
+  word-wrap: break-word;
+}
+#photo-view .post-reply .reply-author {
+  font-size: 1em;
+}
+#photo-view .post-comment-link {
+  margin: 3px 0;
+}
+#photo-view .post-reply-new {
+  margin: 3px 0 3px 50px;
+  padding: 0;
+}
+#photo-view .post-reply-new textarea {
+  width: 193px;
+  height: 55px;
+  padding: 5px;
+}
+
+.photo-viewer-title-wrapper {
+  font-size: 13px;
+  color: #fff;
+  text-align: left;
+}
+.photo-date {
+  margin-right: 10px;
+  color: #646464;
+  font-style: italic;
+}
+.photo-title {
+  margin-right: 10px;
+  font-style: italic;
+}
+.photo-edit-link {
+  display: inline-block;
+  text-indent: -1000em;
+  width: 20px;
+  line-height: 20px;
+  background: url(../images/icon-edit-phototitle.png) no-repeat center center;
+}
+.photo-edit-fields input {
+  padding: 1px 2px;
+}
+.photo-edit-fields button {
+  padding: 0 2px;
+  font-style: italic;
+  font-weight: normal;
+}
