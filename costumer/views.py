@@ -4,7 +4,7 @@ from pyramid.renderers import render
 
 @view_config(route_name='home', renderer='index.html')
 def my_view(request):
-    gallery = request.gallery_tree[1]
+    gallery = request.gallery_tree
     return dict(gallery=gallery)
 
 @view_config(context='pyramid.httpexceptions.HTTPNotFound')

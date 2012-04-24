@@ -28,12 +28,14 @@ class Photo(object):
             Cache photo on instance memory level
         '''
         def wrap(self, width, height, save_ratio = False):
-            cached = self._CACHE.get((width, height, save_ratio))
+            cached = self._CACHE.get((self.filename, width, height, save_ratio))
             if not cached:
-                cached = func(width, height, save_ratio)
-                self._CACHE[(width, height, save_ratio)] = cached
+                cached = func(self, width, height, save_ratio)
+                self._CACHE[(self.filename, width, height, save_ratio)] = cached
             return cached
-        
+        return wrap
+
+    @cache_photo
     def resized(self, width, height, save_ratio = False):
         img = Image.open(self.fullpath)
         resized_name = "%s_%s_%s" % (width, height, self.filename)
