@@ -217,6 +217,7 @@ function PhotoViewer() {
 		//load elements to slide list
 		var photoEl = this.photoEl
 		var preViewerEl = this.preViewerEl;
+		preViewerEl.html('');
 		$(scope).find(".photo a").each(function(k, el) {
 			var href = $(el).attr('href');
 			// var id = $(el).parents('div.photo-wrapper.photo').attr('photo_id') 
