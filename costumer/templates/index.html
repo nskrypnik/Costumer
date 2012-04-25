@@ -5,8 +5,8 @@
 	    % for photo in gallery.photos:
 		    <li class="photo" media_id="${photo.id}">
 		        <a href="${photo.original()}">
-		            <img src="${photo.resized(130,130)}" alt="Img" />
-		            <span class="viewer-thumb hidden">${photo.resized(30,30)}</span>
+		            <img src="${photo.lazy_resize(130,130)}" alt="Img" />
+		            <span class="viewer-thumb hidden">${photo.lazy_resize(70,70)}</span>
 		        </a>
 		    </li>
 		% endfor

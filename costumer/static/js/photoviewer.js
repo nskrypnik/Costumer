@@ -24,6 +24,7 @@ function AbstractViewer() {
 		
 		this.viewerEl = $('#photo-view');
 		this.photoEl = $('#photo-view .photos-wrapper .photo-slides');
+		this.preViewerEl = $('#photo-view .small-icons-previewer')
 		this.captionEl = $('.photo-viewer-title-wrapper')
 		this.captionEl.find('a.photo-edit-link').hide();
 		this.commentsEl = $('#photo-view .comment-list');
@@ -215,6 +216,7 @@ function PhotoViewer() {
 	this.load_all_slides = function(scope) {
 		//load elements to slide list
 		var photoEl = this.photoEl
+		var preViewerEl = this.preViewerEl;
 		$(scope).find(".photo a").each(function(k, el) {
 			var href = $(el).attr('href');
 			// var id = $(el).parents('div.photo-wrapper.photo').attr('photo_id') 
@@ -224,8 +226,33 @@ function PhotoViewer() {
 				.attr({"href": href, "media_id": id}).addClass('photo');
 				
 			photoEl.append(img);
+			
+			var thumb_src = $(el).find('.viewer-thumb').text()
+			var thumb_link = $("<a />").attr({href: '#'})
+			var thumb = $("<img />").attr({"src": thumb_src, "media_id": id});
+			thumb_link.append(thumb)
+			preViewerEl.append(thumb_link);
+			
+			thumb_link.click(function(){
+			    var current = photoEl.find('.photo.active');
+			    
+		        photoEl.find('.last-active').removeClass('last-active');
+		        var chosen_id = $(this).find('img').attr('media_id');
+		        var chosen_photo = photoEl.find('.photo[media_id="'+id+'"]');
+		        if (current != chosen_photo){
+    			    current.removeClass('active');
+    			    current.hide();
+    			    var src = chosen_photo.attr('href')
+    			    chosen_photo.attr({src:src})
+		            chosen_photo.addClass('active');
+		            chosen_photo.show();
+		        }
+		        else console.log('The same photo as viewed');
+		        console.log(chosen_photo);
+		        return false;
+			})
 		});
-	};
+	},
 
 	this.after_init = function(el) {
 		var self = this;
@@ -286,7 +313,7 @@ function PhotoViewer() {
 //			console.log(wnd.innerHeight, wnd.innerWidth);
 			this.photoEl.find('img.photo').each(function(k, el){
 				$(el).css({
-					'max-height': window_height - 75,
+					'max-height': window_height - 185,
 					'max-width': window_width - 450,
 					});
 			});
@@ -333,60 +360,6 @@ function PhotoViewer() {
 
 PhotoViewer.prototype = new AbstractViewer();
 
-function VideoViewer() {
-
-	this.load_all_slides = function(scope) {
-		$(scope).find("div.video").each((function(k, el) {
-			var id = $(el).attr('media_id');
-			var img = $("<div />")
-				.attr({"media_id": id}).addClass('photo');
-				
-			this.photoEl.append(img);
-		}).bind(this));
-	};
-
-	this.on_show = function(el) {
-
-	};
-
-	this.loadComments =  function (el) {
-		var photo_id = $(el).attr('media_id');
-		var current_slide = this.photoEl.find('.photo[media_id="'+photo_id+'"]');
-
-		// clean last active slide
-		var last_active_slide = this.photoEl.find('.photo.last-active');
-		last_active_slide.html('');
-
-		var comments_html;
-		var self = this;
-		// console.log("loading comments", photo_id);
-		this.resetReplyBox();
-		jsonrpc('/video/api/', 'get_all_comments', [photo_id], function (data){
-			data = data.result;
-			self.commentsEl.html(data.comments);
-			self.captionEl.find('.photo-title').text(data.caption); // Show photo caption
-			self.captionEl.find('input[name=photo_id]').val(photo_id); // Write hidden photo_id value
-			self.captionEl.find('input[name=title]').val(data.caption);
-			self.viewerEl.find('.post-age').text(data.date);
-			self.captionEl.find('.photo-edit-fields').hide();
-			self.captionEl.find('.photo-title').show();
-			self.viewerEl.find('div.post-author').html(data.owner.name);
-			self.viewerEl.find('a.post-avatar img').attr({src: data.owner.avatar});
-			current_slide.html(data.html);
-		})
-	};
-
-	this.sendComment = function (id, text) {
-		var self = this;
-		jsonrpc('/video/api/', 'add_comment', [id, text], function (data){
-			// console.log("comment sent", data);
-			self.commentsEl.append(data.result.comment);
-		})
-	};
-}
-
-VideoViewer.prototype = new AbstractViewer();
-
 photoViewer = new  PhotoViewer()
-videoViewer = new  VideoViewer()
+
 

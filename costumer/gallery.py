@@ -1,31 +1,54 @@
 import os
+import md5
 import logging
 import pkg_resources
 import Image, ImageOps
 
+from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPFound
+
 log = logging.getLogger(__name__)
+
+@view_config(route_name="lazy_resize")
+def lazy_photo_resize(request):
+    width = int(request.matchdict.get('width'))
+    height = int(request.matchdict.get('height'))
+    photo_id = request.matchdict.get('photo_id')
+    save_ratio = int(request.matchdict.get('save_ratio'))
+    
+    photo = Photo.get(photo_id, request)
+    return HTTPFound(photo.resized(width, height, bool(save_ratio)))
+
 
 class Photo(object):
 
     _CACHE = {}
+    _CACHED_PHOTOS = {}
     
     cache_root = ''
     cache_url = ''
+    _id = 0
     
     @classmethod
     def set_cache_url(cls, url):
         if url[-1] != '/': url = "%s/" % url
         cls.cache_url = url
         
-    def __init__(self, id_, filename, dirname, request):
-        self.id = id_
+    @classmethod
+    def get(cls, id_, request):
+        filename, dirname = cls._CACHED_PHOTOS.get(id_)
+        return cls(filename, dirname, request)
+    
+    def __init__(self, filename, dirname, request):
         self.request = request
         self.filename = filename
         self.dirname = dirname
         self.fullpath = os.path.join(dirname, filename)
+        self.id = md5.md5(self.fullpath).hexdigest()
+        self._CACHED_PHOTOS[self.id] = (filename, dirname)
         
     def original(self):
-        return self.resized(1600, 1600, True)
+        return self.lazy_resize(1600, 1600, True)
         
     def cache_photo(func):
         '''
@@ -38,6 +61,9 @@ class Photo(object):
                 self._CACHE[(self.filename, width, height, save_ratio)] = cached
             return cached
         return wrap
+    
+    def lazy_resize(self, width, height, save_ratio = False):
+        return self.request.route_url('lazy_resize', width=width, height=height, photo_id=self.id, save_ratio=int(save_ratio))
 
     @cache_photo
     def resized(self, width, height, save_ratio = False):
@@ -82,14 +108,12 @@ class GalleryTree(list):
         
         dir_items = os.listdir(self.base_dir)
         dir_items.sort()
-        photo_index = 0
         for  item in dir_items:
             # First skip all files begin on underscore
             if item[0] == '_':
                 continue
             if is_image(item):
-                self.photos.append(Photo(photo_index, item, self.base_dir, request))
-                photo_index += 1
+                self.photos.append(Photo(item, self.base_dir, request))
             else:
                 dir_path = os.path.join(self.base_dir, item)
                 self.append(GalleryTree(request, dir_path))
@@ -129,3 +153,6 @@ def includeme(config):
     Photo.cache_root = cache_root
     
     config.set_request_property(init_gallery_tree, 'gallery_tree', reify=True)
+    
+    ## add some routes there
+    config.add_route('lazy_resize', '/photo/resize/{width}/{height}/{photo_id}/{save_ratio}/')
