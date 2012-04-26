@@ -314,7 +314,7 @@ function PhotoViewer() {
 //			console.log(wnd.innerHeight, wnd.innerWidth);
 			this.photoEl.find('img.photo').each(function(k, el){
 				$(el).css({
-					'max-height': window_height - 185,
+					'max-height': window_height - 105,
 					'max-width': window_width - 450,
 					});
 			});
