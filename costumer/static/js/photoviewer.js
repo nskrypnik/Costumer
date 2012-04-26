@@ -146,6 +146,8 @@ function AbstractViewer() {
 			.removeClass('last-active').hide();
 		current_photo.addClass('active').show();
 		
+		this.highlighThumb(id);
+		
 		this.captionEl.show()
 		
 		//this.loadComments(current_photo);
@@ -196,6 +198,8 @@ function AbstractViewer() {
 		// //todo delete after fade effect released 
 		next.addClass('active').show();
 		active.removeClass('active').hide()
+		
+		this.highlighThumb(next.attr('media_id'));
 
 		// //TODO fade effect
 		// active.animate({opacity: 0.0}, 500, function() {
@@ -222,6 +226,8 @@ function AbstractViewer() {
 		// //TODO delete after fade effect released 
 		prev.addClass('active').show();
 		active.removeClass('active').hide();
+		
+		this.highlighThumb(prev.attr('media_id'));
 	};
 
 	this.loadComments =  function (el) {
@@ -234,6 +240,12 @@ function AbstractViewer() {
 		$('.post-comment-link').show();
 		$('.post-reply-new').hide();
 	}
+	
+	this.highlighThumb = function(media_id){
+	    var current_thumb = this.preViewerEl.find('img[media_id="'+media_id+'"]');
+		this.preViewerEl.find('img.active').removeClass('active');
+		current_thumb.addClass('active');
+	}
 }
 
 function PhotoViewer() {
@@ -245,6 +257,7 @@ function PhotoViewer() {
 		//load elements to slide list
 		var photoEl = this.photoEl
 		var preViewerEl = this.preViewerEl;
+		var self = this;
 		preViewerEl.html('');
 		$(scope).find(".photo a").each(function(k, el) {
 			var href = $(el).attr('href');
@@ -277,7 +290,8 @@ function PhotoViewer() {
 		            chosen_photo.show();
 		        }
 		        else console.log('The same photo as viewed');
-		        console.log(chosen_photo);
+		        
+		        self.highlighThumb(chosen_photo.attr('media_id'))
 		        return false;
 			})
 		});

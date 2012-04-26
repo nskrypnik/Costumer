@@ -84,11 +84,12 @@ class GalleryTree(list):
     
     root_dir = ''
         
-    def __init__(self, request, base_dir = None):
+    def __init__(self, request, base_dir = None, name='root'):
         '''
             Recursive init to build gallery tree from base dir    
         '''
         self.request = request
+        self.name = name.split('.')[-1]
         
         def is_image(filename):
             '''
@@ -116,10 +117,15 @@ class GalleryTree(list):
                 self.photos.append(Photo(item, self.base_dir, request))
             else:
                 dir_path = os.path.join(self.base_dir, item)
-                self.append(GalleryTree(request, dir_path))
+                self.append(GalleryTree(request, dir_path, name=item))
 
     def __repr__(self):
         return "<GallerryTree[%s]:%s>" % (os.path.split(self.base_dir)[-1], super(GalleryTree, self).__repr__()) 
+    
+    @property
+    def cover(self):
+        if len(self.photos):
+            return self.photos[0]
 
 def init_gallery_tree(request):
     return GalleryTree(request)
