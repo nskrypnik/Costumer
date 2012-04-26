@@ -1,3 +1,29 @@
+if ( !Function.prototype.bind ) {
+
+		Function.prototype.bind = function( obj ) {
+			var slice = [].slice,
+			args = slice.call(arguments, 1),
+			self = this,
+			nop = function () {},
+			bound = function () {
+				return self.apply( nop.prototype && this instanceof nop ? this : ( obj || {} ),
+					args.concat( slice.call(arguments) ) );
+			};
+
+		nop.prototype = self.prototype;
+
+		bound.prototype = new nop();
+
+		return bound;
+	};
+}
+
+if (typeof(console) == 'undefined'){
+    console = {
+        log: function(){}
+    }
+}
+
 
 function AbstractViewer() {
 	this.settings = {
@@ -56,7 +82,9 @@ function AbstractViewer() {
 			this.viewerEl.find('a.close'),
 			this.commentsEl.parent().find('.post-reply-new div.button'),
 		]).each (function (k, v) {
-			v.off('click');
+		    if(typeof(v) != 'undefined'){
+			    v.off('click');
+			}
 		})
 		//bind listeners
 		this.viewerEl.find('.photo-scroll-left').click((function () {
