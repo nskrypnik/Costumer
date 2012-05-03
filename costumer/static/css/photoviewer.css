@@ -207,7 +207,7 @@ body.photo-viewer-active {
     bottom: 0px;
     height: 70px;
     width: 100%;
-    text-align: center;
+/*    text-align: center;*/
     padding: 10px 0px 20px 0px;
     overflow: hidden;
 }

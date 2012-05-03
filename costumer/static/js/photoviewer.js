@@ -46,7 +46,7 @@ function AbstractViewer() {
 	this.after_init = function(el) {
 	};
 
-	this.init = function (el) { 
+	this.init = function (el) {
 		
 		this.viewerEl = $('#photo-view');
 		this.photoEl = $('#photo-view .photos-wrapper .photo-slides');
@@ -245,6 +245,13 @@ function AbstractViewer() {
 	    var current_thumb = this.preViewerEl.find('img[media_id="'+media_id+'"]');
 		this.preViewerEl.find('img.active').removeClass('active');
 		current_thumb.addClass('active');
+		k = parseInt(current_thumb.attr('index'));
+		
+		// Then animate small-icons-previewer
+		var previewer_position = $(window).width()/2 - (k + 1)*75;
+		console.log(previewer_position);
+		//$('.small-icons-previewer').css({'left': previewer_position + 'px'});
+		$('.small-icons-previewer').animate({'left': previewer_position + 'px'}, 200);
 	}
 }
 
@@ -271,7 +278,7 @@ function PhotoViewer() {
 			
 			var thumb_src = $(el).find('.viewer-thumb').text()
 			var thumb_link = $("<a />").attr({href: '#'})
-			var thumb = $("<img />").attr({"src": thumb_src, "media_id": id});
+			var thumb = $("<img />").attr({"src": thumb_src, "media_id": id, "index": k});
 			thumb_link.append(thumb)
 			preViewerEl.append(thumb_link);
 			
