@@ -2,8 +2,7 @@
 
 <%block name="content">
 <div class="gallery-list">
-    ${render_gallery(request.gallery_tree)}
-    % for gallery in request.gallery_tree:
+    % for gallery in request.gallery_tree[0]:
     ${render_gallery(gallery)}
     % endfor
 </div>
@@ -12,11 +11,12 @@
 <%def name="render_gallery(gallery)">
     % if gallery.cover:
     <div class="gallery-wrapper">
-        <div class="gallery-cover">
-            <img src="${gallery.cover.lazy_resize(300, 300)}" />
-        </div>
         <div align=center class="gallery-title">
             <h6>${gallery.name}</h6>
+        </div>
+
+        <div class="gallery-cover">
+            <img src="${gallery.cover.lazy_resize(300, 300)}" />
         </div>
     </div>
     % endif

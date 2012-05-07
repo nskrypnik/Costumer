@@ -266,11 +266,16 @@ img {
 
 .gallery-wrapper {
     float: left;
+    margin: 0px 25px 25px 0;
+    box-shadow: 3px 3px 3px #aaa;
+    -moz-box-shadow: 3px 3px 3px #aaa;
+    -webkit-box-shadow: 3px 3px 3px #aaa;
+    padding: 5px;
+    padding-bottom: 0px;
+    background: white;
 }
 
 .gallery-cover {
-    background: #FFF;
-    padding: 5px;
 }
 
 .gallery-title {
@@ -279,7 +284,9 @@ img {
 
 .gallery-wrapper h6 {
     margin: 0;
-    color: white;
-    font-size: 18px;
+    color: #EBEBEB;
+    font-size: 16px;
     font-weight: normal;
+    padding: 5px;
+    text-transform: uppercase;
 }

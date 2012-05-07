@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import md5
 import logging
@@ -89,7 +91,7 @@ class GalleryTree(list):
             Recursive init to build gallery tree from base dir    
         '''
         self.request = request
-        self.name = name.split('.')[-1]
+        self._name = name.split('.')[-1]
         
         def is_image(filename):
             '''
@@ -110,6 +112,7 @@ class GalleryTree(list):
         dir_items = os.listdir(self.base_dir)
         dir_items.sort()
         for  item in dir_items:
+            item = item
             # First skip all files begin on underscore
             if item[0] == '_':
                 continue
@@ -117,10 +120,15 @@ class GalleryTree(list):
                 self.photos.append(Photo(item, self.base_dir, request))
             else:
                 dir_path = os.path.join(self.base_dir, item)
+                dir_path = dir_path
                 self.append(GalleryTree(request, dir_path, name=item))
 
     def __repr__(self):
         return "<GallerryTree[%s]:%s>" % (os.path.split(self.base_dir)[-1], super(GalleryTree, self).__repr__()) 
+    
+    @property
+    def name(self):
+        return self._name.decode('utf8')
     
     @property
     def cover(self):
