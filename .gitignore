@@ -3,3 +3,7 @@
 *~
 costumer/static/gallery/
 costumer/static/cache/
+bin/
+eggs/
+parts/
+develop-eggs/

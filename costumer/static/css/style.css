@@ -142,9 +142,10 @@ img {
 	text-transform: uppercase;
 }
 #contents div {
-	width: 612px;
+/*	width: 612px;
 	margin: 0 auto;
 	padding: 0 0 20px;
+*/
 }
 #contents div a {
 	color: #a40e0e;
@@ -259,3 +260,26 @@ img {
     display: none;    
 }
 
+.gallery-list {
+    padding-left: 20px;
+}
+
+.gallery-wrapper {
+    float: left;
+}
+
+.gallery-cover {
+    background: #FFF;
+    padding: 5px;
+}
+
+.gallery-title {
+    background: #050404;
+}
+
+.gallery-wrapper h6 {
+    margin: 0;
+    color: white;
+    font-size: 18px;
+    font-weight: normal;
+}
