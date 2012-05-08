@@ -1,0 +1,25 @@
+<%inherit file="base.html" />
+
+<%block name="content">
+<div class="gallery-list">
+    % for gallery in request.gallery_tree[0]:
+    ${render_gallery(gallery)}
+    % endfor
+</div>
+</%block>
+
+<%def name="render_gallery(gallery)">
+    % if gallery.cover:
+    <div class="gallery-wrapper">
+        <div align=center class="gallery-title">
+            <h6>${gallery.name}</h6>
+        </div>
+
+        <div class="gallery-cover">
+            <a href="/gallery/0/${gallery.node_index}/">
+                <img src="${gallery.cover.lazy_resize(300, 300)}" />
+            </a>
+        </div>
+    </div>
+    % endif
+</%def>
