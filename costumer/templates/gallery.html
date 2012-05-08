@@ -1,23 +1,14 @@
 <%inherit file="base.html" />
 
 <%block name="content">
-<div class="gallery-list">
-    % for gallery in request.gallery_tree[0]:
-    ${render_gallery(gallery)}
-    % endfor
-</div>
+	<ul class="images">
+	    % for photo in gallery.photos:
+		    <li class="photo" media_id="${photo.id}">
+		        <a href="${photo.original()}">
+		            <img src="${photo.lazy_resize(130,130)}" alt="Img" />
+		            <span class="viewer-thumb hidden">${photo.lazy_resize(70,70)}</span>
+		        </a>
+		    </li>
+		% endfor
+	</ul>
 </%block>
-
-<%def name="render_gallery(gallery)">
-    % if gallery.cover:
-    <div class="gallery-wrapper">
-        <div align=center class="gallery-title">
-            <h6>${gallery.name}</h6>
-        </div>
-
-        <div class="gallery-cover">
-            <img src="${gallery.cover.lazy_resize(300, 300)}" />
-        </div>
-    </div>
-    % endif
-</%def>

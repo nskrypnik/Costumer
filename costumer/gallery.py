@@ -11,6 +11,14 @@ from pyramid.httpexceptions import HTTPFound
 
 log = logging.getLogger(__name__)
 
+@view_config(route_name="gallery_photos", renderer="gallery.html")
+def gallery_photos(request):
+    gallery_path = request.matchdict.get('gallery_path')
+    gallery = request.gallery_tree
+    for node in gallery_path:
+        gallery = gallery[int(node)]
+    return dict(gallery=gallery)
+
 @view_config(route_name="lazy_resize")
 def lazy_photo_resize(request):
     width = int(request.matchdict.get('width'))
@@ -65,6 +73,9 @@ class Photo(object):
         return wrap
     
     def lazy_resize(self, width, height, save_ratio = False):
+        # Check if cahed
+        cached = self._CACHE.get((self.filename, width, height, save_ratio))
+        if cached: return cached
         return self.request.route_url('lazy_resize', width=width, height=height, photo_id=self.id, save_ratio=int(save_ratio))
 
     @cache_photo
@@ -86,12 +97,13 @@ class GalleryTree(list):
     
     root_dir = ''
         
-    def __init__(self, request, base_dir = None, name='root'):
+    def __init__(self, request, base_dir = None, name='root', node_index=0):
         '''
             Recursive init to build gallery tree from base dir    
         '''
         self.request = request
         self._name = name.split('.')[-1]
+        self.node_index = node_index
         
         def is_image(filename):
             '''
@@ -111,6 +123,7 @@ class GalleryTree(list):
         
         dir_items = os.listdir(self.base_dir)
         dir_items.sort()
+        node_index = 0
         for  item in dir_items:
             item = item
             # First skip all files begin on underscore
@@ -121,8 +134,9 @@ class GalleryTree(list):
             else:
                 dir_path = os.path.join(self.base_dir, item)
                 dir_path = dir_path
-                self.append(GalleryTree(request, dir_path, name=item))
-
+                self.append(GalleryTree(request, dir_path, name=item, node_index=node_index))
+                node_index += 1
+    
     def __repr__(self):
         return "<GallerryTree[%s]:%s>" % (os.path.split(self.base_dir)[-1], super(GalleryTree, self).__repr__()) 
     
@@ -170,3 +184,4 @@ def includeme(config):
     
     ## add some routes there
     config.add_route('lazy_resize', '/photo/resize/{width}/{height}/{photo_id}/{save_ratio}/')
+    config.add_route('gallery_photos', '/gallery/*gallery_path')
