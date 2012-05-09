@@ -1,6 +1,7 @@
 <%inherit file="base.html" />
 
 <%block name="content">
+    <h3>${gallery.name}</h3>
 	<ul class="images">
 	    % for photo in gallery.photos:
 		    <li class="photo" media_id="${photo.id}">
