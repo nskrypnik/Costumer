@@ -276,10 +276,13 @@ img {
 }
 
 .gallery-cover {
+    padding-top: 29px;
 }
 
 .gallery-title {
     background: #050404;
+    position: absolute;
+    width: 300px;
 }
 
 .gallery-wrapper h6 {
